@@ -1,3 +1,9 @@
+"""
+This file would contain code for downloading videos from different platforms.
+Here, functions could be defined to download the video from a specific
+platform and save the video file on the local computer.
+"""
+
 from abc import ABC, abstractmethod
 
 
