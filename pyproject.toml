@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "podcast-downloader"
+version = "0.1.0"
+description = ""
+authors = ["Victor Mas Montserrat <victormasmon@gmail.com>"]
+readme = "README.md"
+packages = [{include = "podcast_downloader"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
