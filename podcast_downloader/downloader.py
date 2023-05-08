@@ -4,6 +4,7 @@ Here, functions could be defined to download the video from a specific
 platform and save the video file on the local computer.
 """
 from abc import ABC, abstractmethod
+from typing import Tuple
 from pytube import YouTube
 import io
 
@@ -36,14 +37,15 @@ class __interface_ABC(ABC):
 
 class __youtube(__interface_ABC):
     @staticmethod
-    def download(url: str) -> bytes:
-        """Downloads a YouTube video.
+    def download(url: str) -> Tuple(str, bytes):
+        """Downloads the video from youtube.
 
         Args:
-            url (_type_): The URL of the YouTube video.
+            url (str): The URL of the video.
 
         Returns:
-            bytes: The video file.
+            str: The title of the video.
+            bytes: The bytes of the video.
         """
         # Asking to youtube for the video
         # TODO: What happens video doesn't exist or isn't allowed download?
@@ -54,7 +56,7 @@ class __youtube(__interface_ABC):
         # Downloading the video
         buffer = io.BytesIO()
         stream.stream_to_buffer(buffer)
-        return buffer
+        return stream.title, buffer
 
 
 class __spotify(__interface_ABC):
