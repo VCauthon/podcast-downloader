@@ -10,7 +10,7 @@ packages = [{include = "podcast_downloader"}]
 python = "^3.10"
 moviepy = "^1.0.3"
 speechrecognition = "^3.10.0"
-pytube = "^12.1.3"
+pytube = "^15.0.0"
 
 
 [build-system]

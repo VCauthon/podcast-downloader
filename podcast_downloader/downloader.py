@@ -5,6 +5,7 @@ platform and save the video file on the local computer.
 """
 from abc import ABC, abstractmethod
 from pytube import YouTube
+import io
 
 
 class __interface_ABC(ABC):
@@ -35,7 +36,7 @@ class __interface_ABC(ABC):
 
 class __youtube(__interface_ABC):
     @staticmethod
-    def download(url) -> bytes:
+    def download(url: str) -> bytes:
         """Downloads a YouTube video.
 
         Args:
@@ -44,13 +45,22 @@ class __youtube(__interface_ABC):
         Returns:
             bytes: The video file.
         """
-        return YouTube(url).streams.get_highest_resolution().stream_to_buffer()
+        # Asking to youtube for the video
+        # TODO: What happens video doesn't exist or isn't allowed download?
+        video = YouTube(url)
+        # TODO: Here is the context of the video
+        stream = video.streams.get_highest_resolution()
+
+        # Downloading the video
+        buffer = io.BytesIO()
+        stream.stream_to_buffer(buffer)
+        return buffer
 
 
 class __spotify(__interface_ABC):
     @staticmethod
-    def download(url):
-        raise ValueError('Pending implementation')
+    def download(url: str):
+        raise ValueError("Pending implementation")
 
 
 def downloader(url: str) -> bytes:
@@ -78,4 +88,4 @@ def downloader(url: str) -> bytes:
 # TODO: Remove this and create a test
 # TODO: youtube - There are some videos that can't be downloaded
 if __name__ == "__main__":
-    downloader("https://www.youtube.com/watch?v=JJYLBzBh4ZI")
+    downloader("https://www.youtube.com/watch?v=PrVgdrsp-b8")
