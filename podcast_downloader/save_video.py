@@ -10,8 +10,9 @@ import os
 # TODO: If this doesn't work try moviepy
 
 
-def save_video(video: bytes, name_file: str, format: str = '.mp4', path_video: str = None):
-
+def save_video(
+    video: bytes, name_file: str, format: str = ".mp4", path_video: str = None
+):
     # Loads the stream of bytes into an imageo object
     video_saver = imageio.read(io.BytesIO(video), format=format)
 
