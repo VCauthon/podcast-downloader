@@ -4,22 +4,22 @@ Here, functions could be defined to save the video file to a specific location.
 """
 import imageio
 import io
+import os
 
-# stream de bytes del video (ejemplo)
-video_bytes = b'\x00\x01\x02\x03\x04'
 
-# crear un objeto io.BytesIO a partir del stream de bytes
-video_io = io.BytesIO(video_bytes)
+# TODO: If this doesn't work try moviepy
 
-# cargar el stream de bytes en un objeto imageio
-video_reader = imageio.read_reader(video_io, '.mp4')
 
-# crear un objeto writer de imageio para escribir el archivo de salida
-writer = imageio.get_writer('video.mp4')
+def save_video(video: bytes, name_file: str, format: str = '.mp4', path_video: str = None):
 
-# agregar cada frame del video al objeto writer de imageio
-for frame in video_reader:
-    writer.append_data(frame)
+    # Loads the stream of bytes into an imageo object
+    video_saver = imageio.read(io.BytesIO(video), format=format)
 
-# cerrar el objeto writer de imageio
-writer.close()
+    # Creates the file where the video will be saved
+    complete_path = os.path.join(path_video, name_file)
+    writer = imageio.get_writer(complete_path)
+    for frame in video_saver:
+        writer.append_data(frame)
+
+    # Closes the file where the data has been saved
+    writer.close()
