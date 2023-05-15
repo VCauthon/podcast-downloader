@@ -1,5 +1,9 @@
 import pytest
-from your_module import Transcribe
+
+import sys
+sys.path.append('../src')
+from podcast_downloader.transcribe import Transcribe  # noqa: E402
+
 
 @pytest.fixture
 def transcribe_instance():

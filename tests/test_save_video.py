@@ -2,7 +2,10 @@ import pytest
 import os
 import imageio
 
-from your_module_name import save_video
+import sys
+sys.path.append('../src')
+from podcast_downloader.save_video import save_video  # noqa: E402
+
 
 @pytest.fixture
 def video_data():

@@ -1,18 +1,26 @@
 import pytest
 from moviepy.video.io.VideoFileClip import VideoFileClip
-from your_module import trim_video
+
+import sys
+sys.path.append('../src')
+# TODO: Pending to add the final functions
+import podcast_downloader.highlight
+
 
 @pytest.fixture
 def video_file():
     return "video.mp4"
 
+
 @pytest.fixture
 def start_time():
     return 60
 
+
 @pytest.fixture
 def end_time():
     return 120
+
 
 def test_trim_video(video_file, start_time, end_time):
     # Load the video file

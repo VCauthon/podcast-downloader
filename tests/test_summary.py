@@ -2,7 +2,11 @@
 import pytest
 import requests
 from unittest.mock import Mock
-from mymodule import get_summary
+
+import sys
+sys.path.append('../src')
+from podcast_downloader.summary import get_summary  # noqa: E402
+
 
 def test_get_summary(requests_mock):
     # Mock the requests.post method
