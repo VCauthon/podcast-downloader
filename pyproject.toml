@@ -11,6 +11,7 @@ python = "^3.10"
 moviepy = "^1.0.3"
 speechrecognition = "^3.10.0"
 pytube = "^15.0.0"
+pytest = "^7.3.1"
 
 
 [build-system]
