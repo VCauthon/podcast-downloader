@@ -2,7 +2,8 @@ import pytest
 from moviepy.video.io.VideoFileClip import VideoFileClip
 
 import sys
-sys.path.append('../src')
+
+sys.path.append("../src")
 # TODO: Pending to add the final functions
 import podcast_downloader.highlight
 
