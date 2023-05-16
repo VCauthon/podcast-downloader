@@ -399,3 +399,4 @@ FodyWeavers.xsd
 
 # Own notes
 notes.*
+.vscode/*
