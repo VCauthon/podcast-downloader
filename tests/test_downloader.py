@@ -9,7 +9,7 @@ def test_downloader_youtube():
         "https://www.youtube.com/watch?v=52Gg9CqhbP8&list="
         "PLlVaFbgtYyJfgQAoHqDjz5MDmVLwARcWo&index=3"
     )
-    result = downloader.downloader(url)
+    result = downloader(url)
     assert (
         isinstance(result.bytes, bytes) and len(result.bytes) > 0
     ), "The download hasn't been successful"
