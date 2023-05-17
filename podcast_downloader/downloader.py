@@ -1,77 +1,60 @@
-"""
-This file would contain code for downloading videos from different platforms.
-Here, functions could be defined to download the video from a specific
-platform and save the video file on the local computer.
-"""
 from abc import ABC, abstractmethod
-from typing import Tuple
+from io import BytesIO
 from pytube import YouTube
-import io
 
 
-class __interface_ABC(ABC):
-    """Interface for downloading videos from different platforms."""
+class ContextVideoDownloaded:
+    def __init__(self, title: str, bytes: bytes, author: str, seconds: int):
+        self.title = title
+        self.author = author
+        self.seconds = seconds
+        self.bytes = bytes
 
+
+class interface_ABC(ABC):
     @abstractmethod
-    def download(url):
+    def download(self, url) -> ContextVideoDownloaded:
         pass
 
     @staticmethod
     def detect_platform(url: str) -> str:
-        """Detects the platform of the URL.
-
-        Args:
-            url (str): The URL of the video.
-
-        Raises:
-            ValueError: If the platform isn't supported.
-
-        Returns:
-            str: The platform of the URL.
-        """
-        if "youtube.com" in url or "youtu.be" in url:
-            return "__youtube"
-        else:
-            raise ValueError("The process could detect the source platform")
+        return url.split(".")[1]
 
 
-class __youtube(__interface_ABC):
-    @staticmethod
-    def download(url: str) -> Tuple(str, bytes):
-        """Downloads the video from youtube.
+class youtube(interface_ABC):
+    def download(self, url) -> ContextVideoDownloaded:
 
-        Args:
-            url (str): The URL of the video.
+        # Create a YouTube object with the video URL
+        youtube = YouTube(url)
 
-        Returns:
-            str: The title of the video.
-            bytes: The bytes of the video.
-        """
-        # Asking to youtube for the video
-        # TODO: What happens video doesn't exist or isn't allowed download?
-        video = YouTube(url)
-        # TODO: Here is the context of the video
-        stream = video.streams.get_highest_resolution()
+        # Get the highest resolution video stream available
+        stream = youtube.streams.get_highest_resolution()
 
-        # Downloading the video
-        buffer = io.BytesIO()
-        stream.stream_to_buffer(buffer)
-        return stream.title, buffer
+        # Gets the video into a stream of bytes
+        bytes_video = BytesIO()
+        stream.stream_to_buffer(bytes_video)
+
+        # Download the video into a stream of bytes
+        return ContextVideoDownloaded(
+            title=youtube.title,
+            author=youtube.author,
+            seconds=youtube.length,
+            bytes=bytes_video.getvalue(),
+        )
 
 
-class __spotify(__interface_ABC):
-    @staticmethod
-    def download(url: str):
-        raise ValueError("Pending implementation")
+class spotify(interface_ABC):
+    def download(self, url) -> ContextVideoDownloaded:
+        print("spotify")
 
 
-def downloader(url: str) -> bytes:
+def downloader(url: str) -> ContextVideoDownloaded:
     # Detects the type of platform
-    platform = __interface_ABC.detect_platform(url)
+    platform = interface_ABC.detect_platform(url)
 
     # Raises an error if the platform isn't supported
     available_services = [
-        service.__name__ for service in __interface_ABC.__subclasses__()
+        service.__name__ for service in interface_ABC.__subclasses__()
     ]
     if platform not in available_services:
         raise ValueError(
@@ -82,12 +65,11 @@ def downloader(url: str) -> bytes:
     # Returns the download file
     return [
         service
-        for service in __interface_ABC.__subclasses__()
+        for service in interface_ABC.__subclasses__()
         if service.__name__ == platform
-    ][0].download(url)
+    ][0]().download(url)
 
 
-# TODO: Remove this and create a test
-# TODO: youtube - There are some videos that can't be downloaded
+# TODO: Remove this
 if __name__ == "__main__":
-    downloader("https://www.youtube.com/watch?v=PrVgdrsp-b8")
+    downloader("youtube.com")
