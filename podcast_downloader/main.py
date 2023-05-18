@@ -12,23 +12,64 @@ class Download:
          # Raises an error if the url isn't valid
          self.url: str = url
          self.validate_url(self.url)
-         
+
          # Initialize the rest of the variables
          self._title: str = None 
          self._author: str = None 
          self._seconds: int = None     
-         self._bytes: bytes = None
+         self._stream_video: bytes = None
          self._transcription: str = None
-         
-         @property
-         def title(self):
-             return self._title
-         
-         @title.setter
-         def title(self, title: str)
-            self._title = title
-        
+
         @staticmethod
         def validate_url(url: str) -> None:
-                resultado = urlparse(url)
-                return all([resultado.scheme, resultado.netloc])
+            resultado = urlparse(url)
+            return all([resultado.scheme, resultado.netloc])
+
+         @property
+         def title(self) -> str:
+             return self._title
+
+         @title.setter
+         def title(self, title: str) -> None:
+            self._title = title
+
+         @property
+         def author(self) -> str:
+             return self._author
+
+         @author.setter
+         def author(self, author: str) -> None:
+            self._author = author
+
+         @property
+         def seconds(self) -> str:
+             # TODO: Transform time into str
+             return self._seconds
+
+         @author.setter
+         def seconds(self, seconds: int) -> None:
+            self._seconds = seconds
+
+         @property
+         def author(self) -> str:
+             return self._author
+
+         @author.setter
+         def author(self, author: str) -> None:
+            self._author = _author
+
+         @property
+         def stream_video(self) -> str:
+             return self._stream_video
+         
+         @author.setter
+         def stream_video(self, stream: bytes) -> None:
+            self._stream_video = stream_video
+
+         @property
+         def transcription(self) -> str:
+             return self._transcription
+         
+         @author.setter
+         def transcription(self, transcription: str) -> None:
+            self._transcription = transcription
