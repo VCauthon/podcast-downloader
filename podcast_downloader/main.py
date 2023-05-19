@@ -43,8 +43,10 @@ class Download:
 
          @property
          def seconds(self) -> str:
-             # TODO: Transform time into str
-             return self._seconds
+            hours, remainder = divmod(self._seconds, 3600)
+            minutes, seconds = divmod(self._seconds, 60)
+
+            return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
 
          @author.setter
          def seconds(self, seconds: int) -> None:
