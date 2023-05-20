@@ -17,7 +17,7 @@ class Download:
          self._title: str = None 
          self._author: str = None 
          self._seconds: int = None
-         self._chapters: List[Tupple[str, str]] = None
+         self._chapters: List[Tupple[int, int]] = None
          self._stream_video: bytes = None
          self._transcription: str = None
 
@@ -52,6 +52,16 @@ class Download:
          @author.setter
          def seconds(self, seconds: int) -> None:
             self._seconds = seconds
+
+@property
+         def chapters(self) -> List[Tupple[int, int]:
+            return self._chapters
+
+         @author.setter
+         def chapters(self, chapter: Tupple[int, int]) -> None:
+            if self._chapters is None:
+                self._chapters = []
+            self._chapters.append(chapter)
 
          @property
          def author(self) -> str:
