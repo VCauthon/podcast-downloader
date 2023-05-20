@@ -16,7 +16,8 @@ class Download:
          # Initialize the rest of the variables
          self._title: str = None 
          self._author: str = None 
-         self._seconds: int = None     
+         self._seconds: int = None
+         self._chapters: List[Tupple[str, str]] = None
          self._stream_video: bytes = None
          self._transcription: str = None
 
