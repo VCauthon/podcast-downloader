@@ -75,3 +75,15 @@ class Download:
          @author.setter
          def transcription(self, transcription: str) -> None:
             self._transcription = transcription
+
+"""
+
+comand line
+
+url - minuts:minuts,... - output site (optional)
+
+retrive from file
+
+csv - output site (optional)
+
+"""
