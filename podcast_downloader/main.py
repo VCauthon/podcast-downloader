@@ -97,4 +97,10 @@ retrive from file
 
 csv - output site (optional)
 
+download
+highlight
+  resume
+transcribe
+save
+
 """
