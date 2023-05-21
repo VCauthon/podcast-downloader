@@ -48,6 +48,12 @@ class spotify(interface_ABC):
         print("spotify")
 
 
+class __soundcloud(__interface_ABC):
+    @staticmethod
+    def download(url: str):
+        raise ValueError("Pending implementation")
+
+
 def downloader(url: str) -> ContextVideoDownloaded:
     # Detects the type of platform
     platform = interface_ABC.detect_platform(url)
