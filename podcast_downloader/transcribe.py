@@ -15,11 +15,13 @@ class Transcribe:
     def transcribe(self, **kwargs):
         # Retrieve the audio from the video
         audio = Transcribe.RetrieveAudio.return_audio(
-            video=deepcopy(self.video), **kwargs
+            video=self.video, **kwargs
         )
 
         # Transcribe the audio using speech recognition
         r = sr.Recognizer()
+        # TODO: Has to search a way to transform the audio into a file-like variable
+        # TODO: AKA > has .read()
         with sr.AudioFile(audio) as source:
             text = r.record(source)
 
