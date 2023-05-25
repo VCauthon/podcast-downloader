@@ -17,19 +17,7 @@ def test_transcribe(transcribe_instance: Transcribe):
     assert len(result) > 0
 
 
-def test_return_audio(transcribe_instance: Transcribe):
-    audio = transcribe_instance.RetrieveAudio.return_audio()
-    assert isinstance(audio, bytes)
-    assert len(audio) > 0
-
-
-def test_concrete_sections_of_the_video(transcribe_instance: Transcribe):
-    start_time = 10  # Provide a start time in seconds
-    end_time = 20  # Provide an end time in seconds
-    result = (
-        transcribe_instance.RetrieveAudio._Transcribe__concrete_sections_of_the_video(
-            start_time, end_time
-        )
-    )
+def test_transcribe_sections(transcribe_instance: Transcribe):
+    result = transcribe_instance.transcribe(start_time=10, end_time=20)
     assert isinstance(result, str)
     assert len(result) > 0
