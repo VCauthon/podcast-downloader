@@ -4,48 +4,34 @@ text using a speech recognition library. Here, functions could be defined to
 transcribe the audio of different video formats.
 """
 import speech_recognition as sr
-from moviepy.video.io.VideoFileClip import VideoFileClip
-from copy import deepcopy
+from moviepy.editor import VideoFileClip
+import io
 
 
 class Transcribe:
-    def __init__(self, video) -> None:
+    def __init__(self, video: bytes) -> None:
         self.video = VideoFileClip(video)
 
     def transcribe(self, **kwargs):
+
         # Retrieve the audio from the video
-        audio = Transcribe.RetrieveAudio.return_audio(
-            video=self.video, **kwargs
-        )
+        audio = self.__return_audio(**kwargs)
 
         # Transcribe the audio using speech recognition
         r = sr.Recognizer()
-        # TODO: Has to search a way to transform the audio into a file-like variable
-        # TODO: AKA > has .read()
-        with sr.AudioFile(audio) as source:
+        with sr.AudioFile(io.BytesIO(audio)) as source:
             text = r.record(source)
 
         # Print the transcribed text
         return text
 
-    class RetrieveAudio:
-        own_video = None
+    def __return_audio(self, **kwarg) -> bytes:
 
-        @classmethod
-        def return_audio(cls, video: VideoFileClip, **kwarg) -> bytes:
-            # Copy the video used video
-            cls.own_video = video
+        # Retrieves the audio from the video
+        audio = self.video.subclip(
+            kwarg["start_time"], kwarg["end_time"]).audio\
+                if "start_time" in kwarg and "end_time" in kwarg \
+                else self.video.audio
 
-            # Retrieve section of the video if the timer arguments exists
-            if "start_time" in kwarg and "end_time" in kwarg:
-                cls.__concrete_sections_of_the_video(
-                    start_time=kwarg["start_time"], end_time=kwarg["end_time"]
-                )
-
-            return cls.own_video.audio
-
-        def __concrete_sections_of_the_video(
-            cls, start_time: int, end_time: int
-        ) -> str:
-            # Extract a concrete section of the video
-            return cls.own_video.subclip(start_time, end_time)
+        # Returns the audio
+        return audio.to_soundarray().tobytes()
