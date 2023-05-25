@@ -18,6 +18,8 @@ class Transcribe:
         audio = self.__return_audio(**kwargs)
 
         # Transcribe the audio using speech recognition
+        # TODO: There is an error working with AudioFile
+        # TODO: Test if working with a .wav file this works
         r = sr.Recognizer()
         with sr.AudioFile(io.BytesIO(audio)) as source:
             text = r.record(source)
